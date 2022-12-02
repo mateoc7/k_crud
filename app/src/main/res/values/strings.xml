@@ -11,4 +11,5 @@
     <string name="label_female">Femenino</string>
     <string name="label_gender">Sexo</string>
     <string name="label_register">Registrar</string>
+    <string name="label_cancel">Cancelar</string>
 </resources>
