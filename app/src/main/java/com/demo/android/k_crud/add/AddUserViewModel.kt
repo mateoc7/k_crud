@@ -3,9 +3,9 @@ package com.demo.android.k_crud.add
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.demo.android.k_crud.callbacks.ListenerStatus
+import com.demo.android.k_crud.listeners.ListenerStatus
 
-class AddUserViewModel(private val callback: ListenerStatus) : ViewModel() {
+class AddUserViewModel(private val listener: ListenerStatus) : ViewModel() {
 
     private var _eventRegister = MutableLiveData<Boolean>()
     val eventRegister: LiveData<Boolean>
@@ -16,15 +16,15 @@ class AddUserViewModel(private val callback: ListenerStatus) : ViewModel() {
             if (email.validateData()) {
                 if (phone.validateData()) {
                     onRegister()
-                    callback.onSuccess("Registro exitoso")
+                    listener.onSuccess("Registro exitoso")
                 } else {
-                    callback.onError("Teléfono inválido")
+                    listener.onError("Teléfono inválido")
                 }
             } else {
-                callback.onError("Email inválido")
+                listener.onError("Email inválido")
             }
         } else {
-            callback.onError("Nombre inválido")
+            listener.onError("Nombre inválido")
         }
     }
 

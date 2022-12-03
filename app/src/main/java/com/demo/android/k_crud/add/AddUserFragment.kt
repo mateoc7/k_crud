@@ -7,12 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.demo.android.k_crud.R
-import com.demo.android.k_crud.callbacks.ListenerStatus
+import com.demo.android.k_crud.listeners.ListenerStatus
 import com.demo.android.k_crud.databinding.FragmentAddUserBinding
 
 class AddUserFragment : Fragment(), ListenerStatus {
@@ -41,9 +40,13 @@ class AddUserFragment : Fragment(), ListenerStatus {
         // Obtenga una referencia al ViewModel asociado con este fragmento.
         viewModel = ViewModelProvider(this, factory)[AddUserViewModel::class.java]
 
+        // Operacion cancelada
         binding.btnCancelRegister.setOnClickListener {
-            it.findNavController().navigate(R.id.action_addUserFragment_to_managementUserFragment)
+            it.findNavController()
+                .navigate(AddUserFragmentDirections.actionAddUserFragmentToManagementUserFragment())
         }
+
+        // Iniciar proceso de registro
         binding.btnRegister.setOnClickListener {
             onRegister()
             viewModel.eventRegister.observe(viewLifecycleOwner) { success ->

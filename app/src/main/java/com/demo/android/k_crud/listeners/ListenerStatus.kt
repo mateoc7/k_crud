@@ -1,4 +1,4 @@
-package com.demo.android.k_crud.callbacks
+package com.demo.android.k_crud.listeners
 
 interface ListenerStatus {
     fun onSuccess(msg: String)
