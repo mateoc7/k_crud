@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +23,6 @@ class AddUserFragment : Fragment(), ListenerStatus {
     // ViewModel
     private lateinit var factory: AddUserViewModelFactory
     private lateinit var viewModel: AddUserViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,13 +62,26 @@ class AddUserFragment : Fragment(), ListenerStatus {
         val names = binding.inputName.text.toString()
         val email = binding.inputEmail.text.toString()
         val phone = binding.inputPhone.text.toString()
-        viewModel.validateData(names, email, phone, "")
+        val sex = getSex(binding.radiogroupGender.checkedRadioButtonId)
+        viewModel.validateData(names, email, phone, sex)
     }
 
     private fun onRegisterComplete() {
         val action = AddUserFragmentDirections.actionAddUserFragmentToManagementUserFragment()
         NavHostFragment.findNavController(this).navigate(action)
         viewModel.onRegisterComplete()
+    }
+
+    private fun getSex(idGender: Int): String? {
+        var sex: String? = null
+        if (idGender != -1) {
+            // Obtener el id del boton seleccionado y asignar un valor
+            when (idGender) {
+                R.id.radio_male -> sex = "Masculino"
+                R.id.radio_female -> sex = "Femenino"
+            }
+        }
+        return sex
     }
 
     override fun onSuccess(msg: String) {

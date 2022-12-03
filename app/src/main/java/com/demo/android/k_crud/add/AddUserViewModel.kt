@@ -11,12 +11,16 @@ class AddUserViewModel(private val listener: ListenerStatus) : ViewModel() {
     val eventRegister: LiveData<Boolean>
         get() = _eventRegister
 
-    fun validateData(names: String, email: String, phone: String, sex: String) {
+    fun validateData(names: String, email: String, phone: String, sex: String?) {
         if (names.validateData()) {
             if (email.validateData()) {
                 if (phone.validateData()) {
-                    onRegister()
-                    listener.onSuccess("Registro exitoso")
+                    if (!sex.isNullOrEmpty()) {
+                        onRegister()
+                        listener.onSuccess("Registro exitoso")
+                    } else {
+                        listener.onError("Sexo inválido")
+                    }
                 } else {
                     listener.onError("Teléfono inválido")
                 }
