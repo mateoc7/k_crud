@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.demo.android.k_crud.R
+import com.demo.android.k_crud.database.PersonDatabase
 import com.demo.android.k_crud.listeners.ListenerStatus
 import com.demo.android.k_crud.databinding.FragmentAddUserBinding
 
@@ -34,10 +35,16 @@ class AddUserFragment : Fragment(), ListenerStatus {
             container, false
         )
 
-        // Cree una instancia de ViewModel Factory
-        factory = AddUserViewModelFactory(this)
+        // Obtenga el contexto del fragment actual
+        val application = requireNotNull(this.activity).application
 
-        // Obtenga una referencia al ViewModel asociado con este fragmento.
+        // Obtenga una referencia de la base de datos
+        val dataSource = PersonDatabase.getInstance(application).personDatabaseDao
+
+        // Cree una instancia de ViewModel Factory
+        factory = AddUserViewModelFactory(this, dataSource)
+
+        // Obtenga una referencia al ViewModel asociado con este fragmento
         viewModel = ViewModelProvider(this, factory)[AddUserViewModel::class.java]
 
         // Operacion cancelada
@@ -75,7 +82,7 @@ class AddUserFragment : Fragment(), ListenerStatus {
     private fun getSex(idGender: Int): String? {
         var sex: String? = null
         if (idGender != -1) {
-            // Obtener el id del boton seleccionado y asignar un valor
+            // Seleccionar el id que corresponda al parametro
             when (idGender) {
                 R.id.radio_male -> sex = "Masculino"
                 R.id.radio_female -> sex = "Femenino"
