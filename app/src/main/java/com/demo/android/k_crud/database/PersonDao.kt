@@ -20,11 +20,11 @@ interface PersonDao {
 
     // Update
     @Update
-    suspend fun update(person: Person)
+    suspend fun update(person: Person?)
 
     // Delete
     @Delete
-    suspend fun delete(person: Person)
+    suspend fun delete(person: Person?)
 
     // Clear
     @Query("DELETE FROM person")

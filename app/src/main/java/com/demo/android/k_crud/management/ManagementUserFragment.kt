@@ -1,8 +1,8 @@
 package com.demo.android.k_crud.management
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -11,9 +11,9 @@ import androidx.navigation.ui.NavigationUI
 import com.demo.android.k_crud.R
 import com.demo.android.k_crud.database.PersonDatabase
 import com.demo.android.k_crud.databinding.FragmentManagementUserBinding
-import com.demo.android.k_crud.listeners.ListenerStatus
+import com.demo.android.k_crud.listeners.ListenerAction
 
-class ManagementUserFragment : Fragment(), ListenerStatus {
+class ManagementUserFragment : Fragment(), ListenerAction {
 
     //Binding
     private lateinit var binding: FragmentManagementUserBinding
@@ -32,6 +32,9 @@ class ManagementUserFragment : Fragment(), ListenerStatus {
             container, false
         )
 
+        @Suppress("DEPRECATION")
+        setHasOptionsMenu(true)
+
         // Obtenga el contexto del fragment actual
         val application = requireNotNull(this.activity).application
 
@@ -39,12 +42,12 @@ class ManagementUserFragment : Fragment(), ListenerStatus {
         val dataSource = PersonDatabase.getInstance(application).personDatabaseDao
 
         // Cree una instancia de ViewModel Factory
-        factory = ManagementUserViewModelFactory(this, dataSource)
+        factory = ManagementUserViewModelFactory(dataSource)
 
         // Obtenga una referencia al ViewModel asociado con este fragmento
         viewModel = ViewModelProvider(this, factory)[ManagementUserViewModel::class.java]
 
-        val adapter = ManagementUserAdapter()
+        val adapter = ManagementUserAdapter(this)
         binding.personList.adapter = adapter
 
         viewModel.people.observe(viewLifecycleOwner) {
@@ -52,9 +55,6 @@ class ManagementUserFragment : Fragment(), ListenerStatus {
                 adapter.data = it
             }
         }
-
-        @Suppress("DEPRECATION")
-        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -73,11 +73,11 @@ class ManagementUserFragment : Fragment(), ListenerStatus {
         ) || super.onOptionsItemSelected(item)
     }
 
-    override fun onSuccess(msg: String) {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    override fun editAction(person: Int) {
+        Log.i("ManagementUserFragment", "Person in position $person selected to edit")
     }
 
-    override fun onError(msg: String) {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    override fun deleteAction(person: Int) {
+        Log.i("ManagementUserFragment", "Person in position $person selected to delete")
     }
 }
