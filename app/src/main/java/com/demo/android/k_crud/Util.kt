@@ -3,9 +3,16 @@ package com.demo.android.k_crud
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
+import com.demo.android.k_crud.listeners.ListenerAction
 
 @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-fun alertDialog(msg: String, activity: FragmentActivity) {
+fun alertDialog(
+    msg: String,
+    action: String,
+    position: Int,
+    listener: ListenerAction,
+    activity: FragmentActivity
+) {
     val builder: AlertDialog.Builder = activity.let {
         AlertDialog.Builder(it)
     }
@@ -14,7 +21,7 @@ fun alertDialog(msg: String, activity: FragmentActivity) {
     builder.setTitle("Atención")
 
     builder.setPositiveButton("Aceptar") { dialog, id ->
-        Log.i("Util", "Positive button pressed")
+        listener.onAction(action, position)
     }
 
     builder.setNegativeButton("Cancelar") { dialog, id ->

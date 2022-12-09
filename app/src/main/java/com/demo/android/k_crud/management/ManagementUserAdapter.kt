@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.android.k_crud.R
 import com.demo.android.k_crud.database.Person
-import com.demo.android.k_crud.listeners.ListenerAction
+import com.demo.android.k_crud.listeners.ListenerOnClick
 
-class ManagementUserAdapter(private val listener: ListenerAction) :
+class ManagementUserAdapter(private val listener: ListenerOnClick) :
     RecyclerView.Adapter<ManagementUserAdapter.ViewHolder>() {
 
     var data = listOf<Person>()
@@ -33,7 +33,7 @@ class ManagementUserAdapter(private val listener: ListenerAction) :
 
     override fun getItemCount() = data.size
 
-    class ViewHolder private constructor(itemView: View, private val listener: ListenerAction) :
+    class ViewHolder private constructor(itemView: View, private val listener: ListenerOnClick) :
         RecyclerView.ViewHolder(itemView), OnClickListener {
 
         private val nameString: TextView = itemView.findViewById(R.id.name_string);
@@ -50,20 +50,20 @@ class ManagementUserAdapter(private val listener: ListenerAction) :
             btnDelete.setOnClickListener(this)
         }
 
-        companion object {
-            fun from(parent: ViewGroup, listener: ListenerAction) : ViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.list_item_person, parent, false)
-                return ViewHolder(view, listener)
-            }
-        }
-
         override fun onClick(view: View?) {
             if (view is ImageView) {
                 when (view.id) {
-                    btnEdit.id -> listener.editAction(adapterPosition)
-                    btnDelete.id -> listener.deleteAction(adapterPosition)
+                    btnEdit.id -> listener.onClick(adapterPosition, "edit")
+                    btnDelete.id -> listener.onClick(adapterPosition, "delete")
                 }
+            }
+        }
+
+        companion object {
+            fun from(parent: ViewGroup, listener: ListenerOnClick) : ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val view = layoutInflater.inflate(R.layout.list_item_person, parent, false)
+                return ViewHolder(view, listener)
             }
         }
     }

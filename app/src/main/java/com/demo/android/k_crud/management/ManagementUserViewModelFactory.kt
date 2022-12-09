@@ -3,8 +3,6 @@ package com.demo.android.k_crud.management
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.demo.android.k_crud.database.PersonDao
-import com.demo.android.k_crud.listeners.ListenerAction
-import com.demo.android.k_crud.listeners.ListenerStatus
 
 class ManagementUserViewModelFactory(
     private val database: PersonDao

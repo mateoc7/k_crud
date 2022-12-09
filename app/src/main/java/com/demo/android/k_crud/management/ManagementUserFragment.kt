@@ -11,9 +11,9 @@ import androidx.navigation.ui.NavigationUI
 import com.demo.android.k_crud.R
 import com.demo.android.k_crud.database.PersonDatabase
 import com.demo.android.k_crud.databinding.FragmentManagementUserBinding
-import com.demo.android.k_crud.listeners.ListenerAction
+import com.demo.android.k_crud.listeners.ListenerOnClick
 
-class ManagementUserFragment : Fragment(), ListenerAction {
+class ManagementUserFragment : Fragment(), ListenerOnClick {
 
     //Binding
     private lateinit var binding: FragmentManagementUserBinding
@@ -73,11 +73,7 @@ class ManagementUserFragment : Fragment(), ListenerAction {
         ) || super.onOptionsItemSelected(item)
     }
 
-    override fun editAction(person: Int) {
-        Log.i("ManagementUserFragment", "Person in position $person selected to edit")
-    }
-
-    override fun deleteAction(person: Int) {
-        Log.i("ManagementUserFragment", "Person in position $person selected to delete")
+    override fun onClick(position: Int, action: String) {
+        Log.i("ManagementUserFragment", "Item in position $position selected to $action")
     }
 }
