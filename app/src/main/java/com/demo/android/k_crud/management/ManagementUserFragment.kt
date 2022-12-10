@@ -1,7 +1,6 @@
 package com.demo.android.k_crud.management
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -11,9 +10,8 @@ import androidx.navigation.ui.NavigationUI
 import com.demo.android.k_crud.R
 import com.demo.android.k_crud.database.PersonDatabase
 import com.demo.android.k_crud.databinding.FragmentManagementUserBinding
-import com.demo.android.k_crud.listeners.ListenerOnClick
 
-class ManagementUserFragment : Fragment(), ListenerOnClick {
+class ManagementUserFragment : Fragment() {
 
     //Binding
     private lateinit var binding: FragmentManagementUserBinding
@@ -47,12 +45,12 @@ class ManagementUserFragment : Fragment(), ListenerOnClick {
         // Obtenga una referencia al ViewModel asociado con este fragmento
         viewModel = ViewModelProvider(this, factory)[ManagementUserViewModel::class.java]
 
-        val adapter = ManagementUserAdapter(this)
+        val adapter = ManagementUserAdapter()
         binding.personList.adapter = adapter
 
         viewModel.people.observe(viewLifecycleOwner) {
             it?.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         }
 
@@ -71,9 +69,5 @@ class ManagementUserFragment : Fragment(), ListenerOnClick {
             item,
             requireView().findNavController()
         ) || super.onOptionsItemSelected(item)
-    }
-
-    override fun onClick(position: Int, action: String) {
-        Log.i("ManagementUserFragment", "Item in position $position selected to $action")
     }
 }
