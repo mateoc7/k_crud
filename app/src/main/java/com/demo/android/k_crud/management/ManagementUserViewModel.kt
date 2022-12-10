@@ -9,12 +9,4 @@ import kotlinx.coroutines.launch
 class ManagementUserViewModel(private val database: PersonDao) : ViewModel() {
 
     val people = database.getAllPerson()
-
-    fun onDelete(position: Int) {
-        viewModelScope.launch { delete(people.value?.get(position)) }
-    }
-
-    private suspend fun delete(person: Person?) {
-        database.delete(person)
-    }
 }

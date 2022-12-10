@@ -48,6 +48,7 @@ class ManagementUserFragment : Fragment() {
         val adapter = ManagementUserAdapter()
         binding.personList.adapter = adapter
 
+        // Observe la lista proporcionada por la base de datos
         viewModel.people.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.submitList(it)
