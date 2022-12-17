@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.demo.android.k_crud.R
 import com.demo.android.k_crud.database.PersonDatabase
 import com.demo.android.k_crud.databinding.FragmentDetailUserBinding
@@ -46,6 +47,14 @@ class DetailUserFragment : Fragment() {
 
         // Defina el propiertario del ciclo de vida
         binding.lifecycleOwner = this
+
+        viewModel.navigateToManagementUser.observe(viewLifecycleOwner) {
+            if (it == true) {
+                this.findNavController()
+                    .navigate(DetailUserFragmentDirections.actionDetailUserFragmentToManagementUserFragment())
+                viewModel.doneNavigating()
+            }
+        }
 
         return binding.root
     }
