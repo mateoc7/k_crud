@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.demo.android.k_crud.R
 import com.demo.android.k_crud.database.PersonDatabase
@@ -45,7 +46,9 @@ class ManagementUserFragment : Fragment() {
         // Obtenga una referencia al ViewModel asociado con este fragmento
         viewModel = ViewModelProvider(this, factory)[ManagementUserViewModel::class.java]
 
-        val adapter = ManagementUserAdapter()
+        val adapter = ManagementUserAdapter(ManagementUserListener {
+            viewModel.onPersonClicked(it)
+        })
         binding.personList.adapter = adapter
 
         // Observe la lista proporcionada por la base de datos
@@ -54,6 +57,21 @@ class ManagementUserFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
+
+        // Observe la accion click sobre un item
+        viewModel.navigateToPersonDetail.observe(viewLifecycleOwner) {
+            it?.let {
+                this.findNavController().navigate(
+                    ManagementUserFragmentDirections.actionManagementUserFragmentToDetailUserFragment(
+                        it
+                    )
+                )
+                viewModel.onPersonDetailNavigated()
+            }
+        }
+
+        // Defina el propiertario del ciclo de vida
+        binding.lifecycleOwner = this
 
         return binding.root
     }

@@ -20,13 +20,17 @@ interface PersonDao {
 
     // Update
     @Update
-    suspend fun update(person: Person?)
+    suspend fun update(person: Person)
 
     // Delete
     @Delete
-    suspend fun delete(person: Person?)
+    suspend fun delete(person: Person)
 
     // Clear
     @Query("DELETE FROM person")
     suspend fun clear();
+
+    // Get item by id
+    @Query("SELECT * FROM person WHERE id = :key")
+    fun getPersonById(key: Long): LiveData<Person>
 }

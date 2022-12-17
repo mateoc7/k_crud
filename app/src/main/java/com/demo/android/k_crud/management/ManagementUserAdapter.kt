@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.demo.android.k_crud.database.Person
 import com.demo.android.k_crud.databinding.ListItemPersonBinding
 
-class ManagementUserAdapter :
+class ManagementUserAdapter(val clickListener: ManagementUserListener) :
     ListAdapter<Person, ManagementUserAdapter.ViewHolder>(PersonDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,7 +17,7 @@ class ManagementUserAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     class ViewHolder private constructor(private val binding: ListItemPersonBinding) :
@@ -26,8 +26,9 @@ class ManagementUserAdapter :
         val nameString = binding.nameString
         val emailString = binding.emailString
 
-        fun bind(item: Person) {
+        fun bind(item: Person, clickListener: ManagementUserListener) {
             binding.person = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 

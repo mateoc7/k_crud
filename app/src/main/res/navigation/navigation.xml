@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_managementUserFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
+        <action
+            android:id="@+id/action_managementUserFragment_to_detailUserFragment"
+            app:destination="@id/detailUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/addUserFragment"
@@ -22,5 +25,18 @@
             android:id="@+id/action_addUserFragment_to_managementUserFragment"
             app:destination="@id/managementUserFragment"
             app:popUpTo="@id/managementUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailUserFragment"
+        android:name="com.demo.android.k_crud.detail.DetailUserFragment"
+        android:label="fragment_detail_user"
+        tools:layout="@layout/fragment_detail_user" >
+        <action
+            android:id="@+id/action_detailUserFragment_to_managementUserFragment"
+            app:destination="@id/managementUserFragment"
+            app:popUpTo="@id/managementUserFragment" />
+        <argument
+            android:name="personId"
+            app:argType="long" />
     </fragment>
 </navigation>

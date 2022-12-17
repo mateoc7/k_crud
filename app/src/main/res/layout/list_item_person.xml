@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="person"
             type="com.demo.android.k_crud.database.Person" />
+        <variable
+            name="clickListener"
+            type="com.demo.android.k_crud.management.ManagementUserListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:onClick="@{() -> clickListener.onClick(person)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_cardview"
@@ -51,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="20dp"
                 android:textColor="@color/black"
-                app:formatEmail="@{person}"
+                app:emailPerson="@{person}"
                 app:layout_constraintEnd_toEndOf="@id/name_string"
                 app:layout_constraintStart_toStartOf="@id/name_string"
                 app:layout_constraintTop_toBottomOf="@id/name_string" />
@@ -63,6 +66,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_edit"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,6 +77,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_delete"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_edit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
