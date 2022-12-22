@@ -33,4 +33,8 @@ interface PersonDao {
     // Get item by id
     @Query("SELECT * FROM person WHERE id = :key")
     fun getPersonById(key: Long): LiveData<Person>
+
+    // Find item by id
+    @Query("SELECT * FROM person WHERE id = :key")
+    suspend fun findPersonById(key: Long): Person
 }

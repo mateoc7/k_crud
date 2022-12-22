@@ -12,5 +12,6 @@
     <string name="label_gender">Sexo</string>
     <string name="label_register">Registrar</string>
     <string name="label_cancel">Cancelar</string>
+    <string name="label_accept">Aceptar</string>
     <string name="label_back">Volver</string>
 </resources>

@@ -2,8 +2,8 @@ package com.demo.android.k_crud.management
 
 import com.demo.android.k_crud.database.Person
 
-class ManagementUserListener(val clickListener: (personId: Long) -> Unit) {
-    fun onClick(person: Person) = clickListener(person.id)
-    fun onUpdate(person: Person) = clickListener(person.id)
-    fun onDelete(person: Person) = clickListener(person.id)
+class ManagementUserListener(val clickListener: (personId: Long, action: String) -> Unit) {
+    fun onDetail(person: Person) = clickListener(person.id, "detail")
+    fun onDelete(person: Person) = clickListener(person.id, "delete")
+    fun onUpdate(person: Person) = clickListener(person.id, "update")
 }

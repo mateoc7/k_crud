@@ -1,6 +1,8 @@
 package com.demo.android.k_crud.management
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -9,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.demo.android.k_crud.R
+import com.demo.android.k_crud.alertDialog
 import com.demo.android.k_crud.database.PersonDatabase
 import com.demo.android.k_crud.databinding.FragmentManagementUserBinding
 
@@ -46,8 +49,10 @@ class ManagementUserFragment : Fragment() {
         // Obtenga una referencia al ViewModel asociado con este fragmento
         viewModel = ViewModelProvider(this, factory)[ManagementUserViewModel::class.java]
 
-        val adapter = ManagementUserAdapter(ManagementUserListener {
-            viewModel.onPersonClicked(it)
+        val adapter = ManagementUserAdapter(ManagementUserListener { item, action ->
+            // La clave se conforma de 'id_item-accion'
+            val key = "$item-$action"
+            viewModel.onPersonClicked(key)
         })
         binding.personList.adapter = adapter
 
@@ -59,14 +64,20 @@ class ManagementUserFragment : Fragment() {
         }
 
         // Observe la accion click sobre un item
-        viewModel.navigateToPersonDetail.observe(viewLifecycleOwner) {
-            it?.let {
-                this.findNavController().navigate(
-                    ManagementUserFragmentDirections.actionManagementUserFragmentToDetailUserFragment(
-                        it
-                    )
-                )
-                viewModel.onPersonDetailNavigated()
+        viewModel.eventActionPersonClicked.observe(viewLifecycleOwner) { key ->
+            key?.let {
+                val splitKey = it.split('-')
+                val id = splitKey[0].toLong()
+                val action = splitKey[1]
+
+                when (action) {
+                    "detail" -> onNavigateDetail(id)
+                    "delete" -> onDelete(id)
+                    "update" -> onUpdate(id)
+                    else -> Log.i("ManagementUserFragment", "No action selected")
+                }
+
+                viewModel.onActionCompleted()
             }
         }
 
@@ -74,6 +85,31 @@ class ManagementUserFragment : Fragment() {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER", "NAME_SHADOWING")
+    private fun onDelete(id: Long) {
+        val dialog = alertDialog(
+            "¿Está seguro que desea eliminar a esta persona?",
+            requireNotNull(this.activity)
+        )
+        dialog.setPositiveButton(R.string.label_accept) { dialog, which ->
+            viewModel.onDelete(id)
+        }
+        dialog.setNegativeButton(R.string.label_cancel) { dialog, which ->
+            Log.i("ManagementUserFragment", "Cancel button selected")
+        }
+        dialog.show()
+    }
+
+    private fun onUpdate(id: Long) {
+        Log.i("ManagementUserFragment", "Action update selected")
+    }
+
+    private fun onNavigateDetail(id: Long) {
+        this.findNavController().navigate(
+            ManagementUserFragmentDirections.actionManagementUserFragmentToDetailUserFragment(id)
+        )
     }
 
     @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")

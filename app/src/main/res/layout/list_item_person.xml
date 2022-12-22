@@ -35,13 +35,14 @@
                 android:id="@+id/layout_container_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> clickListener.onClick(person)}">
+                android:layout_gravity="center_vertical"
+                android:onClick="@{() -> clickListener.onDetail(person)}">
 
                 <ImageView
                     android:id="@+id/user_image"
+                    imagePerson="@{person}"
                     android:layout_width="64dp"
-                    android:layout_height="60dp"
-                    imagePerson="@{person}" />
+                    android:layout_height="60dp" />
 
                 <LinearLayout
                     android:id="@+id/layout_info"
@@ -82,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
+                    android:onClick="@{() -> clickListener.onUpdate(person)}"
                     android:src="@drawable/ic_edit" />
 
                 <ImageView
@@ -89,6 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:onClick="@{() -> clickListener.onDelete(person)}"
                     android:src="@drawable/ic_delete" />
             </LinearLayout>
         </LinearLayout>
