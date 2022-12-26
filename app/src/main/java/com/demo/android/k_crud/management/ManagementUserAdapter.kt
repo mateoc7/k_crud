@@ -23,9 +23,6 @@ class ManagementUserAdapter(val clickListener: ManagementUserListener) :
     class ViewHolder private constructor(private val binding: ListItemPersonBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        val nameString = binding.nameString
-        val emailString = binding.emailString
-
         fun bind(item: Person, clickListener: ManagementUserListener) {
             binding.person = item
             binding.clickListener = clickListener
@@ -50,4 +47,10 @@ class PersonDiffCallback : DiffUtil.ItemCallback<Person>() {
     override fun areContentsTheSame(oldItem: Person, newItem: Person): Boolean {
         return oldItem == newItem
     }
+}
+
+class ManagementUserListener(val clickListener: (personId: Long, action: String) -> Unit) {
+    fun onDetail(person: Person) = clickListener(person.id, "detail")
+    fun onDelete(person: Person) = clickListener(person.id, "delete")
+    fun onUpdate(person: Person) = clickListener(person.id, "update")
 }

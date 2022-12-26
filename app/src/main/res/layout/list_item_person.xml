@@ -20,80 +20,73 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/layout_container"
-            android:layout_width="0dp"
+            android:id="@+id/layout_container_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> clickListener.onDetail(person)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/user_image"
+                imagePerson="@{person}"
+                android:layout_width="64dp"
+                android:layout_height="60dp" />
+
             <LinearLayout
-                android:id="@+id/layout_container_info"
+                android:id="@+id/layout_info"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_string"
+                    namesPerson="@{person}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="Nombre" />
+
+                <TextView
+                    android:id="@+id/email_string"
+                    emailPerson="@{person}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    tools:text="Email" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btn_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:onClick="@{() -> clickListener.onDetail(person)}">
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> clickListener.onUpdate(person)}"
+                android:src="@drawable/ic_edit" />
 
-                <ImageView
-                    android:id="@+id/user_image"
-                    imagePerson="@{person}"
-                    android:layout_width="64dp"
-                    android:layout_height="60dp" />
-
-                <LinearLayout
-                    android:id="@+id/layout_info"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/name_string"
-                        namesPerson="@{person}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        tools:text="Nombre" />
-
-                    <TextView
-                        android:id="@+id/email_string"
-                        emailPerson="@{person}"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        tools:text="Email" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/layout_actions"
+            <ImageView
+                android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/btn_edit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:onClick="@{() -> clickListener.onUpdate(person)}"
-                    android:src="@drawable/ic_edit" />
-
-                <ImageView
-                    android:id="@+id/btn_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:onClick="@{() -> clickListener.onDelete(person)}"
-                    android:src="@drawable/ic_delete" />
-            </LinearLayout>
+                android:layout_marginStart="10dp"
+                android:onClick="@{() -> clickListener.onDelete(person)}"
+                android:src="@drawable/ic_delete" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

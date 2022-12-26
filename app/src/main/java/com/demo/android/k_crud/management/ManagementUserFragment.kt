@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.demo.android.k_crud.R
@@ -107,9 +108,9 @@ class ManagementUserFragment : Fragment() {
     }
 
     private fun onNavigateDetail(id: Long) {
-        this.findNavController().navigate(
+        val action =
             ManagementUserFragmentDirections.actionManagementUserFragmentToDetailUserFragment(id)
-        )
+        NavHostFragment.findNavController(this).navigate(action)
     }
 
     @Suppress("OVERRIDE_DEPRECATION", "DEPRECATION")
